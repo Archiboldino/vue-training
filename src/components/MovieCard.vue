@@ -1,5 +1,5 @@
 <template>
-  <div class="movie-card-module__card">
+  <router-link :to="'/movie/' + movie.id" class="movie-card-module__card">
     <img alt="movie-poster" :src="movie.posterUrl">
     <div class="movie-card-module__footer">
       <div class="movie-card-module__general">
@@ -8,7 +8,7 @@
       </div>
       <div>{{ movie.genre }}</div>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script>
@@ -28,6 +28,7 @@ export default {
   width: 30%;
   display: inline-block;
   margin: 15px 20px;
+  text-decoration: none;
 }
 
 .movie-card-module__card img {
