@@ -2,8 +2,8 @@
   <div class="results-filter-module__wrapper">
     <div class="results-filter-module__sortBy">
       <span>Sort by</span>
-      <radiobutton-pair right-button-value="right" left-button-value="left" left-button-id="filter-release"
-                        right-button-id="filter-rating" buttons-name="sort-by">
+      <radiobutton-pair right-button-value="rating" left-button-value="date" left-button-id="filter-release"
+                        right-button-id="filter-rating" buttons-name="sort-by" v-model="sortValue">
         <template v-slot:left-button-content>
           Release date
         </template>
@@ -20,7 +20,17 @@ import RadiobuttonPair from "@/components/RadiobuttonPair";
 
 export default {
   name: "SortByComponent",
-  components: {RadiobuttonPair}
+  components: {RadiobuttonPair},
+  computed: {
+    sortValue: {
+      get: function() {
+        return this.$store.state.sort
+      },
+      set: function(value) {
+        this.$store.commit("setSort", value)
+      }
+    }
+  }
 }
 </script>
 

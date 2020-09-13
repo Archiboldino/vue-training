@@ -1,10 +1,12 @@
 <template>
   <div class="toggle">
-    <input type="radio" :name="buttonsName" :id="leftButtonId" :value="leftButtonValue" checked/>
+    <input type="radio" :name="buttonsName" :id="leftButtonId" :value="leftButtonValue"
+           :checked="value === leftButtonValue" @change="$emit('input', $event.target.value)"/>
     <label :for="leftButtonId">
       <slot name="left-button-content">Left</slot>
     </label>
-    <input type="radio" :name="buttonsName" :id="rightButtonId" :value="rightButtonValue"/>
+    <input type="radio" :name="buttonsName" :id="rightButtonId" :value="rightButtonValue"
+           :checked="value === rightButtonValue" @change="$emit('input', $event.target.value)"/>
     <label :for="rightButtonId">
       <slot name="right-button-content">Right</slot>
     </label>
@@ -34,6 +36,10 @@ export default {
     buttonsName: {
       type: String,
       required: true
+    },
+    value: {
+      type: String,
+      required: false
     }
   }
 }
