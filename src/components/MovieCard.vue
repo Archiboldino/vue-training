@@ -1,12 +1,12 @@
 <template>
   <router-link :to="'/movie/' + movie.id" class="movie-card-module__card">
-    <img alt="movie-poster" :src="movie.posterUrl">
+    <img alt="movie-poster" :src="movie.poster_path">
     <div class="movie-card-module__footer">
       <div class="movie-card-module__general">
-        <div class="movie-card-module__title">{{ movie.name }}</div>
-        <div class="movie-card-module__year">{{ movie.year }}</div>
+        <div class="movie-card-module__title">{{ movie.title }}</div>
+        <div class="movie-card-module__year">{{ movie.release_date | formatYear }}</div>
       </div>
-      <div>{{ movie.genre }}</div>
+      <div>{{ movie.genres | formatArray }}</div>
     </div>
   </router-link>
 </template>
@@ -18,6 +18,14 @@ export default {
     movie: {
       type: Object,
       required: true
+    }
+  },
+  filters: {
+    formatYear: date => {
+      return new Date(date).getFullYear()
+    },
+    formatArray: array => {
+      return array.join(", ")
     }
   }
 }

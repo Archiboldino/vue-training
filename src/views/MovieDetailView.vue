@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div v-if="movie">
     <header-component class="header" :show-home-button="true">
       <movie-detail :movie="movie"/>
     </header-component>
     <div class="films-genre-wrapper">
-      Films by {{ movie.genre }} genre
+      Films by {{ movie.genres[0] }} genre
     </div>
     <movie-search-result/>
   </div>
@@ -14,27 +14,34 @@
 import MovieSearchResult from "@/components/MovieGrid";
 import HeaderComponent from "@/components/HeaderComponent";
 import MovieDetail from "@/components/MovieDetail";
+import {mapGetters} from "vuex"
 
 export default {
-  name: "SearchView",
+  name: "MovieDetailView",
   components: {
     MovieDetail,
     MovieSearchResult,
     HeaderComponent
   },
-  data: () => ({
-    movie: {
-      posterUrl: '/poster.jpg',
-      name: 'name',
-      secondName: 'second name',
-      year: '2020',
-      plot: 'Very long string Very long string Very long string Very long string Very long string Very long string Very' +
-          ' long string Very long string Very long string Very long string Very long string Very long string ',
-      rating: '1.2',
-      length: '123 min',
-      genre: 'Fantasy'
+  data: function() {
+    return {
+      movie: null
     }
-  })
+  },
+  created: function() {
+    this.setMovie()
+  },
+  methods: {
+    setMovie: function() {
+      this.movie = this.getMovieById(this.$route.params.id)
+    }
+  },
+  computed: {
+    ...mapGetters(["getMovieById"]),
+  },
+  watch: {
+    "$route": "setMovie"
+  }
 }
 </script>
 
