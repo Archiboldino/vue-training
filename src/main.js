@@ -11,5 +11,8 @@ Vue.use(InViewDirective)
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  created() {
+    this.$store.dispatch('loadMovies');
+  }
 }).$mount('#app')

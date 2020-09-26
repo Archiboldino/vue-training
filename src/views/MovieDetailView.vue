@@ -14,7 +14,7 @@
 import MovieSearchResult from "@/components/MovieGrid";
 import HeaderComponent from "@/components/HeaderComponent";
 import MovieDetail from "@/components/MovieDetail";
-import {mapGetters} from "vuex"
+import movieApi from "@/api/movie-api";
 
 export default {
   name: "MovieDetailView",
@@ -32,12 +32,9 @@ export default {
     this.setMovie()
   },
   methods: {
-    setMovie: function() {
-      this.movie = this.getMovieById(this.$route.params.id)
+    setMovie: async function () {
+      this.movie = await movieApi.getMovieById(this.$route.params.id)
     }
-  },
-  computed: {
-    ...mapGetters(["getMovieById"]),
   },
   watch: {
     "$route": "setMovie"
