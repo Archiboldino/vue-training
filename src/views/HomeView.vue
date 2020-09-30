@@ -15,7 +15,7 @@ import HeaderComponent from "@/components/HeaderComponent";
 import SearchBar from "@/components/SearchBar";
 
 export default {
-  name: "SearchView",
+  name: "HomeView",
   components: {
     SearchBar,
     MovieSearchResult,
@@ -23,22 +23,8 @@ export default {
     HeaderComponent
   },
   created() {
-    this.updateSearchView()
-  },
-  watch: {
-    "$route": function () {
-      this.updateSearchView()
-    }
-  },
-  methods: {
-    updateSearchView() {
-      if (this.$route.query.q)
-        this.$store.commit("setSearchQuery", this.$route.query.q);
-      if (this.$route.query.sort)
-        this.$store.commit("setSort", this.$route.query.sort);
-      if (this.$route.query.field)
-        this.$store.commit("setSearchField", this.$route.query.field);
-      this.$store.dispatch("updateFilteredMovies");
+    if (this.$store.state.movies.length === 0) {
+      this.$store.dispatch('loadMovies');
     }
   }
 }

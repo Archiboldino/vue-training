@@ -2,8 +2,8 @@
   <div class="search-bar-module__searchBar">
     <h3>Find your movie</h3>
     <div class="search-bar-module__searchInput">
-      <input type="text" v-model="searchQuery" @keyup.enter="updateFilteredMovies"/>
-      <button-component @click="updateFilteredMovies">Search</button-component>
+      <input type="text" v-model="searchQuery" @keyup.enter="submitSearch"/>
+      <button-component @click="submitSearch">Search</button-component>
     </div>
     <div class="search-bar-module__searchFilter">
       <span class="search-bar-module__searchBy">Search by</span>
@@ -23,31 +23,38 @@
 <script>
 import RadiobuttonPair from "@/components/RadiobuttonPair";
 import ButtonComponent from "@/components/ButtonComponent";
-import {mapActions} from "vuex";
 
 export default {
   name: "SearchBar",
   components: {RadiobuttonPair, ButtonComponent},
   computed: {
     searchField: {
-      get: function() {
+      get: function () {
         return this.$store.state.searchField
       },
-      set: function(value) {
+      set: function (value) {
         this.$store.commit("setSearchField", value)
       }
     },
     searchQuery: {
-      get: function() {
+      get: function () {
         return this.$store.state.searchQuery
       },
-      set: function(value) {
+      set: function (value) {
         this.$store.commit("setSearchQuery", value)
       }
     }
   },
   methods: {
-    ...mapActions(["updateFilteredMovies"])
+    submitSearch() {
+      this.$router.push({
+        name: "Search", query: {
+          q: this.searchQuery,
+          sort: this.$store.state.sort,
+          field: this.searchField
+        }
+      })
+    }
   }
 }
 </script>
