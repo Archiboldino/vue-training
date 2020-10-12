@@ -1,6 +1,7 @@
 <template>
   <router-link :to="'/movie/' + movie.id" class="movie-card-module__card">
-    <img alt="movie-poster" :src="movie.poster_path">
+    <img alt="movie-poster" src="" ref="image"
+         v-in-view-observer:once @inView="loadImage">
     <div class="movie-card-module__footer">
       <div class="movie-card-module__general">
         <div class="movie-card-module__title">{{ movie.title }}</div>
@@ -12,6 +13,8 @@
 </template>
 
 <script>
+import formatYear from "@/filters/format-year-filter"
+
 export default {
   name: "MovieCard",
   props: {
@@ -21,13 +24,16 @@ export default {
     }
   },
   filters: {
-    formatYear: date => {
-      return new Date(date).getFullYear()
-    },
     formatArray: array => {
       return array.join(", ")
+    },
+    formatYear: formatYear
+  },
+  methods: {
+    loadImage: function () {
+      this.$refs.image.src = this.movie.poster_path
     }
-  }
+  },
 }
 </script>
 

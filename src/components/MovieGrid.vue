@@ -12,7 +12,7 @@ export default {
   name: "MovieSearchResult",
   components: {MovieCard},
   computed: {
-    ...mapState(["movies"])
+    ...mapState({movies :"filteredMovies"})
   }
 }
 </script>
