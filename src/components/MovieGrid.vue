@@ -6,24 +6,13 @@
 
 <script>
 import MovieCard from "@/components/MovieCard";
+import {mapState} from "vuex"
 
 export default {
   name: "MovieSearchResult",
   components: {MovieCard},
-  data: () => {
-    const movies = []
-    for (var i = 0; i < 9; i++) {
-      movies.push({
-        id: i,
-        posterUrl: "/poster.jpg",
-        name: "Star Wars: The Last Jedi",
-        year: "2017",
-        genre: "Fantasy"
-      })
-    }
-    return {
-      movies
-    }
+  computed: {
+    ...mapState({movies :"filteredMovies"})
   }
 }
 </script>

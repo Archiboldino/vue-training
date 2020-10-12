@@ -1,5 +1,5 @@
 <template>
-  <button class="search-bar-module__searchBtn" type="button" value="button">
+  <button class="search-bar-module__searchBtn" type="button" value="button" @click="$emit('click')">
     <slot/>
   </button>
 </template>
