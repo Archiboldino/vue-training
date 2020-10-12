@@ -11,7 +11,7 @@
     "budget": 0,
     "revenue": 0,
     "genres": ["Action", "Adventure", "Science Fiction"],
-    "runtime": null
+    "runtime": 123
   },
   {
     "id": 424785,

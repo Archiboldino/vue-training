@@ -11,7 +11,7 @@
       <h3>{{ movie.tagline }}</h3>
       <div class="movie-detail-module__extraInfo">
         <span class="movie-detail-module__releaseDate">{{ movie.release_date | formatYear }}</span>
-        <span>{{ movie.runtime }}</span>
+        <span>{{ movie.runtime | formatDuration }}</span>
       </div>
       <div class="movie-detail-module__overview">
         {{ movie.overview }}
@@ -21,14 +21,20 @@
 </template>
 
 <script>
+import formatYear from '@/filters/format-year-filter'
+
 export default {
   name: "MovieDetail",
   props: {
     movie: Object
   },
   filters: {
-    formatYear: date => {
-      return new Date(date).getFullYear()
+    formatYear: formatYear,
+    formatDuration: duration => {
+      if (duration) {
+        return `${duration} min`
+      }
+      return ''
     }
   }
 }
