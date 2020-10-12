@@ -1,17 +1,20 @@
 <template>
-  <div class="movie-card-module__card">
-    <img alt="movie-poster" :src="movie.posterUrl">
+  <router-link :to="'/movie/' + movie.id" class="movie-card-module__card">
+    <img alt="movie-poster" src="" ref="image"
+         v-in-view-observer:once @inView="loadImage">
     <div class="movie-card-module__footer">
       <div class="movie-card-module__general">
-        <div class="movie-card-module__title">{{ movie.name }}</div>
-        <div class="movie-card-module__year">{{ movie.year }}</div>
+        <div class="movie-card-module__title">{{ movie.title }}</div>
+        <div class="movie-card-module__year">{{ movie.release_date | formatYear }}</div>
       </div>
-      <div>{{ movie.genre }}</div>
+      <div>{{ movie.genres | formatArray }}</div>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script>
+import formatYear from "@/filters/format-year-filter"
+
 export default {
   name: "MovieCard",
   props: {
@@ -19,7 +22,18 @@ export default {
       type: Object,
       required: true
     }
-  }
+  },
+  filters: {
+    formatArray: array => {
+      return array.join(", ")
+    },
+    formatYear: formatYear
+  },
+  methods: {
+    loadImage: function () {
+      this.$refs.image.src = this.movie.poster_path
+    }
+  },
 }
 </script>
 
@@ -28,6 +42,7 @@ export default {
   width: 30%;
   display: inline-block;
   margin: 15px 20px;
+  text-decoration: none;
 }
 
 .movie-card-module__card img {

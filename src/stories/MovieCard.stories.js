@@ -12,10 +12,10 @@ export const withMovie = () => ({
   `,
   computed: {
     movie: () => ({
-      posterUrl: '/poster.jpg',
-      name: 'name',
-      genre: 'genre',
-      year: '2020'
+      poster_path: '/poster.jpg',
+      title: 'title',
+      genres: ['genre'],
+      release_date: '2020-05-01'
     })
   }
 })
