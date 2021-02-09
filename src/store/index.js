@@ -1,21 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import movies from '../resources/movies.json'
+import movieApi from '@/api/movie-api'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    movies,
-    filteredMovies: movies,
+    movies : [],
     searchQuery: '',
-    sort: 'date',
+    sort: 'release_date',
     searchField: 'title'
-  },
-  getters: {
-    getMovieById: (state) => (id) => {
-      return state.movies.find(movie => movie.id == id)
-    },
   },
   mutations: {
     setSort: (state, value) => {
@@ -27,29 +21,23 @@ export default new Vuex.Store({
     setSearchQuery: (state, value) => {
       state.searchQuery = value
     },
-    setFilteredMovies: (state, value) => {
-      state.filteredMovies = value
+    setMovies: (state, value) => {
+      state.movies = value
     }
   },
   actions: {
-    updateFilteredMovies: ({commit, state}) => {
-      const filteredMovies = state.movies.filter(movie => {
-        if (state.searchField === 'genre') {
-          return movie.genres.includes(state.searchQuery)
-        }
-        if (state.searchField === 'title') {
-          return movie.title.includes(state.searchQuery) || movie.overview.includes(state.searchQuery)
-        }
+    loadMovies: async ({commit}) => {
+      let newVar = await movieApi.getMovies();
+      commit('setMovies', newVar)
+    },
+    updateFilteredMovies: async ({commit, state}) => {
+      const filteredMovies = await movieApi.getMovies({
+        sortBy: state.sort,
+        searchBy: state.searchField,
+        search: state.searchQuery,
+        sortOrder: 'desc'
       })
-        .sort((a, b) => {
-          if (state.sort === 'date') {
-            return new Date(a.release_date) > new Date(b.release_date) ? -1 : 1
-          }
-          if (state.sort === 'rating') {
-            return a.vote_average > b.vote_average ? -1 : 1
-          }
-        })
-      commit('setFilteredMovies', filteredMovies)
+      commit('setMovies', filteredMovies)
     }
   }
 })

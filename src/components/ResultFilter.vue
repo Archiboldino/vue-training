@@ -2,7 +2,7 @@
   <div class="results-filter-module__wrapper">
     <div class="results-filter-module__sortBy">
       <span>Sort by</span>
-      <radiobutton-pair right-button-value="rating" left-button-value="date" left-button-id="filter-release"
+      <radiobutton-pair right-button-value="vote_average" left-button-value="release_date" left-button-id="filter-release"
                         right-button-id="filter-rating" buttons-name="sort-by" v-model="sortValue">
         <template v-slot:left-button-content>
           Release date
